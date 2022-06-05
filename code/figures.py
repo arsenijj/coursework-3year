@@ -16,8 +16,8 @@ def get_pennants(prices):
     res = []
     col = 0
     for i in range(0, len(prices) - 6):
-        if prices[i] > prices[i + 2] > prices[i + 4] > prices[i + 5] > \
-            prices[i + 3] > prices[i + 1]:
+        if prices[i] > prices[i + 2] > prices[i + 4] > \
+            prices[i + 5] > prices[i + 3] > prices[i + 1]:
             res.append(i)
             col += 1
     return col, make_bolting(res, 6)
@@ -28,10 +28,10 @@ def get_descending_flags(prices):
     col = 0
     eps = 1.25
     for i in range(0, len(prices) - 6):
-        if prices[i] > prices[i + 2] > prices[i + 4] > prices[i + 5] > \
-            prices[i + 3] > prices[i + 1] and \
-                abs(prices[i] - prices[i + 4] - prices[i + 1] \
-                    + prices[i + 5]) < eps:
+        if prices[i] > prices[i + 2] > prices[i + 4] > \
+            prices[i + 5] > prices[i + 3] > prices[i + 1] and \
+                abs(prices[i] - prices[i + 4] - \
+                    prices[i + 1] + prices[i + 5]) < eps:
             res.append(i)
             col += 1
     return col, make_bolting(res, 6)
@@ -42,10 +42,10 @@ def get_rising_flags(prices):
     col = 0
     eps = 0.5
     for i in range(0, len(prices) - 6):
-        if prices[i] < prices[i + 2] < prices[i + 4] < prices[i + 5] and \
-            prices[i + 1] < prices[i + 3] < prices[i + 5] \
-                and abs(prices[i] - prices[i + 4] - prices[i + 1] + \
-                    prices[i + 5]) < eps:
+        if prices[i] < prices[i + 2] < prices[i + 4] < prices[i + 5] \
+            and prices[i + 1] < prices[i + 3] < prices[i + 5] \
+                and abs(prices[i] - prices[i + 4] - \
+                    prices[i + 1] + prices[i + 5]) < eps:
             res.append(i)
             col += 1
     return col, make_bolting(res, 6)
@@ -124,7 +124,8 @@ def get_triple_bottoms(prices):
         if abs(prices[i] - prices[i + 2]) < eps and \
             abs(prices[i + 2] - prices[i + 4]) < eps and \
                 abs(prices[i + 1] - prices[i + 3]) < eps and \
-                    prices[i] < prices[i + 1] and prices[i] < prices[i - 1]:
+                    prices[i] < prices[i + 1] and \
+                        prices[i] < prices[i - 1]:
             res.append(i)
             col += 1
     return col, make_bolting(res, 5)
@@ -162,8 +163,9 @@ def get_falling_wedges(prices):
     res = []
     col = 0
     for i in range(len(prices) - 6):
-        if prices[i] > prices[i + 2] > prices[i + 4] > prices[i + 5] and \
-            prices[i + 1] > prices[i + 3] > prices[i + 5]:
+        if prices[i] > prices[i + 2] > prices[i + 4] > \
+            prices[i + 5] and prices[i + 1] > \
+                prices[i + 3] > prices[i + 5]:
             res.append(i)
             col += 1
     return col, make_bolting(res, 6)
@@ -173,8 +175,10 @@ def get_rising_wedges(prices):
     res = []
     col = 0
     for i in range(len(prices) - 7):
-        if prices[i] < prices[i + 2] < prices[i + 4] < prices[i + 6] and \
-                prices[i + 1] < prices[i + 3] < prices[i + 5] < prices[i + 6]:
+        if prices[i] < prices[i + 2] < prices[i + 4] < \
+            prices[i + 6] and prices[i + 1] < \
+                prices[i + 3] < prices[i + 5] < \
+                    prices[i + 6]:
             res.append(i)
             col += 1
     return col, make_bolting(res, 7)
@@ -188,7 +192,7 @@ def get_rising_triangles(prices):
         if abs(prices[i + 1] - prices[i + 3]) < eps and \
             abs(prices[i + 3] - prices[i + 5]) < eps and \
                 prices[i] < prices[i + 2] < prices[i + 4] < \
-                     prices[i + 6] < prices[i + 5]:
+                    prices[i + 6] < prices[i + 5]:
             res.append(i)
             col += 1
         return col, make_bolting(res, 7)
